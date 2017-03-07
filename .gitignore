@@ -19,3 +19,6 @@ target/
 
 # META-INF folder used in local jar packaging
 src/main/resources/META-INF/
+
+# sensitive database authentication information
+src/main/resources/dbi.cfg
