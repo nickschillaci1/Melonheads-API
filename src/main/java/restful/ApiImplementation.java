@@ -27,13 +27,13 @@ public class ApiImplementation extends Api {
     @Override
     public List<Song> getSongs(String filterType, String filter) {
         List<Song> songs = null;
-        try (Connection conn = sql2o.open()) { //TODO: fix this sql connection
+        try (Connection conn = sql2o.open()) { //TODO: fix this sql connection (note: source -> src)
              songs =
                 conn.createQuery("select city.name, city.population from city, country where "
                     + "city.countrycode=country.code and country.name=:countryName "
                     + "order by city.population desc;")
                     .addParameter("countryName", country)
-                    .executeAndFetch(City.class);
+                    .executeAndFetch(Song.class);
             return songs;
         }
         catch (Exception e) {
@@ -51,7 +51,7 @@ public class ApiImplementation extends Api {
             String URL,
             String source
     ) {
-        try (Connection conn = sql2o.open()) { //TODO: fix these sql connections
+        try (Connection conn = sql2o.open()) { //TODO: fix these sql connections (note: source -> src)
             List<String> codes =
                 conn.createQuery("select code from country where name=:countryName")
                     .addParameter("countryName", countryName)

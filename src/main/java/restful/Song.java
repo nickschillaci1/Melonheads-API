@@ -5,7 +5,7 @@ package restful;
  */
 public class Song {
 
-    private int id, quality, plays;
+    private int id, upvotes, downvotes, plays;
     private String title, artist, album, URL, source;
 
     public Song() {
@@ -56,12 +56,20 @@ public class Song {
         return id;
     }
 
-    public int getQuality() {
-        return quality;
+    public int getUpvotes() {
+        return upvotes;
     }
 
-    public void setQuality(int quality) {
-        this.quality = quality;
+    public void setUpvotes(int upvotes) {
+        this.upvotes = upvotes;
+    }
+
+    public int getDownvotes() {
+        return downvotes;
+    }
+
+    public void setDownvotes(int downvotes) {
+        this.downvotes = downvotes;
     }
 
     public int getPlays() {

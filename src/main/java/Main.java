@@ -52,8 +52,9 @@ public class Main {
                 String title = obj.get("title").getAsString();
                 String artist = obj.get("artist").getAsString();
                 String album = obj.get("album").getAsString();
-                String URL = obj.get("URL").getAsString();
-                String source = obj.get("source").getAsString();
+                String URL = obj.get("url").getAsString();
+                String source = obj.get("src").getAsString();
+                logger.info("Post request: /songs"); //TODO: expand on the info written by the logger
 
                 Api myapi = Api.getApi();
 
