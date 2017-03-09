@@ -52,14 +52,14 @@ public class Main {
                 String title = obj.get("title").getAsString();
                 String artist = obj.get("artist").getAsString();
                 String album = obj.get("album").getAsString();
-                String URL = obj.get("url").getAsString();
-                String source = obj.get("src").getAsString();
+                String url = obj.get("url").getAsString();
+                String src = obj.get("src").getAsString();
                 logger.info("Post request: /songs"); //TODO: expand on the info written by the logger
 
                 Api myapi = Api.getApi();
 
 
-                if (myapi.createSong(title, artist, album, URL, source)) {
+                if (myapi.createSong(title, artist, album, url, src)) {
                     response.status(200);
                     return gson.toJson(obj);
                 }

@@ -27,13 +27,13 @@ public class ApiImplementation extends Api {
     @Override
     public List<Song> getSongs(String filterType, String filter) {
         List<Song> songs = null;
-        try (Connection conn = sql2o.open()) { //TODO: fix this sql connection (note: source -> src)
+        try (Connection conn = sql2o.open()) {
              songs =
-                conn.createQuery("select city.name, city.population from city, country where "
-                    + "city.countrycode=country.code and country.name=:countryName "
-                    + "order by city.population desc;")
-                    .addParameter("countryName", country)
-                    .executeAndFetch(Song.class);
+                conn.createQuery("select id, title, artist, album, url,"
+                        + "src, upvotes, downvotes, plays from songs where :filterType=':filter';")
+                        .addParameter("filterType", filterType)
+                        .addParameter("filter", filter)
+                        .executeAndFetch(Song.class);
             return songs;
         }
         catch (Exception e) {
@@ -48,29 +48,19 @@ public class ApiImplementation extends Api {
             String title,
             String artist,
             String album,
-            String URL,
-            String source
+            String url,
+            String src
     ) {
-        try (Connection conn = sql2o.open()) { //TODO: fix these sql connections (note: source -> src)
-            List<String> codes =
-                conn.createQuery("select code from country where name=:countryName")
-                    .addParameter("countryName", countryName)
-                    .executeAndFetch(String.class);
-            if (codes.size() != 1) {
-                return false;
-            }
-            else {
-                String code = codes.get(0);
-                conn.createQuery("insert into city (name, countrycode, district, population) "
-                    + "values (:name, :code, :district, :population);")
-                    .addParameter("name", name)
-                    .addParameter("code", code)
-                    .addParameter("district", district)
-                    .addParameter("population", population)
+        try (Connection conn = sql2o.open()) {
+                conn.createQuery("insert into songs (title, artist, album, url, src) "
+                    + "values (:title, :artist, :album, :url, :src);")
+                    .addParameter("title", title)
+                    .addParameter("artist", artist)
+                    .addParameter("album", album)
+                    .addParameter("url", url)
+                        .addParameter("src", src)
                     .executeUpdate();
                 return true;
-
-            }
         }
         catch (Exception e) {
             e.printStackTrace();

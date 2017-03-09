@@ -33,8 +33,8 @@ public abstract class Api {
      * @param title title of song
      * @param artist artist of the song
      * @param album album that the song appears in
-     * @param URL URL that the song is located at
-     * @param source source website or service that the song is located at (used for embedding)
+     * @param url URL that the song is located at
+     * @param src source website or service that the song is located at (used for embedding)
      * @return true if the song was added, false otherwise
      */
 
@@ -42,8 +42,8 @@ public abstract class Api {
         String title,
         String artist,
         String album,
-        String URL,
-        String source
+        String url,
+        String src
     );
 
 

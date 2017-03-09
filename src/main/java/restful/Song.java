@@ -6,7 +6,7 @@ package restful;
 public class Song {
 
     private int id, upvotes, downvotes, plays;
-    private String title, artist, album, URL, source;
+    private String title, artist, album, url, src;
 
     public Song() {
 
@@ -37,19 +37,19 @@ public class Song {
     }
 
     public String getURL() {
-        return URL;
+        return url;
     }
 
-    public void setURL(String URL) {
-        this.URL = URL;
+    public void setURL(String url) {
+        this.url = url;
     }
 
     public String getSource() {
-        return source;
+        return src;
     }
 
-    public void setSource(String source) {
-        this.source = source;
+    public void setSource(String src) {
+        this.src = src;
     }
 
     public int getId() {
