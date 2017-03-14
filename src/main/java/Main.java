@@ -26,7 +26,7 @@ public class Main {
         });
 
         //TODO: check to make sure this endpoint works
-        get("/songs/:filterType:filter", (req, res) -> {
+        get("/songs/:filterType/:filter", (req, res) -> {
             String filterType = req.params("filterType");
             String filter = req.params("filter");
             logger.info("Get request: /songs"

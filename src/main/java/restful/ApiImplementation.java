@@ -30,7 +30,7 @@ public class ApiImplementation extends Api {
         try (Connection conn = sql2o.open()) {
              songs =
                 conn.createQuery("select id, title, artist, album, url,"
-                        + "src, upvotes, downvotes, plays from songs where :filterType=':filter';")
+                        + "src, upvotes, downvotes, plays from songs where :filterType = :filter")
                         .addParameter("filterType", filterType)
                         .addParameter("filter", filter)
                         .executeAndFetch(Song.class);
