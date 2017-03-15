@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Copyright Dr. Ganesh R. Baliga
  * All rights reserved.
- * Modified with permission by Nick Schillaci
+ * Modified with permission by Nick Schillaci, and Rex Cummings
  */
 
 public abstract class Api {
@@ -21,11 +21,12 @@ public abstract class Api {
 
     /**
      * Returns all songs within the given filter
-     * @param filterType The type of filter to apply (id, title, artist etc.) null indicates return all songs
-     * @param filter The value to filter by. null indicates return all songs
+     * @param title The title of the song.
+     * @param artist The artist of the desired song.
+     * @param album The album of the song, if provided.
      * @return list of songs that fall within the filter
      */
-    public abstract List<Song> getSongs(String filterType, String filter);
+    public abstract List<Song> getSongs(String title, String artist, String album);
 
 
     /**
