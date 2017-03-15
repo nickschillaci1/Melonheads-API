@@ -1,5 +1,7 @@
 package restful;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
@@ -9,9 +11,11 @@ import java.util.List;
 /**
  * Copyright Dr. Ganesh R. Baliga
  * All rights reserved.
- * Modified with permission by Nick Schillaci
+ * Modified with permission by Nick Schillaci, and Rex Cummings
  */
 public class ApiImplementation extends Api {
+
+    Logger logger = LoggerFactory.getLogger(ApiImplementation.class);
 
     Sql2o sql2o;
     static ArrayList<String> auth = Auth.getDBAuthentication();
@@ -25,19 +29,22 @@ public class ApiImplementation extends Api {
 
 
     @Override
-    public List<Song> getSongs(String filterType, String filter) {
+    public List<Song> getSongs(String title, String artist, String album) {
         List<Song> songs = null;
         try (Connection conn = sql2o.open()) {
              songs =
-                conn.createQuery("select id, title, artist, album, url,"
-                        + "src, upvotes, downvotes, plays from songs where :filterType = :filter")
-                        .addParameter("filterType", filterType)
-                        .addParameter("filter", filter)
+                conn.createQuery("" +
+                        "SELECT id, title, artist, album, url, src, upvotes, downvotes, plays " +
+                        "FROM songs " +
+                        "WHERE :title = title OR :artist = artist OR :album = album")
+                        .addParameter("title", title)
+                        .addParameter("artist", artist)
+                        .addParameter("album", album)
                         .executeAndFetch(Song.class);
             return songs;
         }
         catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
         return songs;
