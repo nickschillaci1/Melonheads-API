@@ -1,9 +1,8 @@
 /**
  * Created by Dr. Baliga on 2/11/17.
+ *
+ * Modified by Rex Cummings, Nick Schillaci
  */
-
-import static spark.Spark.get;
-import static spark.Spark.post;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -16,6 +15,9 @@ import restful.Song;
 
 import java.util.List;
 
+import static spark.Spark.get;
+import static spark.Spark.post;
+
 public class Main {
     static Logger logger = LoggerFactory.getLogger(Main.class);
     public static void main(String[] args) {
@@ -26,19 +28,21 @@ public class Main {
         });
 
         //TODO: check to make sure this endpoint works
-        get("/songs/:filterType/:filter", (req, res) -> {
-            String filterType = req.params("filterType");
-            String filter = req.params("filter");
+        get("/songs/:title/:artist/:album", (req, res) -> {
+
+            String title = req.params("title");
+            String artist = req.params("artist");
+            String album = req.params("album");
+
             logger.info("Get request: /songs"
-                + " filtered by " + filterType
-                + " matching \""
-                + filter + "\"");
+                + " for title " + title
+                + " and for artist " + artist
+                + " and for album " + album);
             Api myapi = Api.getApi();
-            List<Song> songs = myapi.getSongs(filterType, filter);
+            List<Song> songs = myapi.getSongs(title, artist, album);
 
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             return gson.toJson(songs);
-
         });
 
         //TODO: check to make sure this endpoint works
@@ -74,8 +78,6 @@ public class Main {
             }
 
         });
-
-
-
+        
     }
 }
