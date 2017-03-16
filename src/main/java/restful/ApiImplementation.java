@@ -57,6 +57,14 @@ public class ApiImplementation extends Api {
                                     .addParameter("filter", filter)
                                     .executeAndFetch(Song.class);
                     return songs;
+                case "all": // search all columns
+                    songs =
+                            conn.createQuery("" +
+                                    "SELECT id, title, artist, album, url, src, upvotes, downvotes, plays " +
+                                    "FROM songs WHERE :filter = title OR :filter = artist OR :filter = album")
+                                    .addParameter("filter", filter)
+                                    .executeAndFetch(Song.class);
+                    return songs;
             }
         }
         catch (Exception e) {
