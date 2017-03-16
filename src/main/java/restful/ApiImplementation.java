@@ -29,24 +29,39 @@ public class ApiImplementation extends Api {
 
 
     @Override
-    public List<Song> getSongs(String title, String artist, String album) {
+    public List<Song> getSongs(String filterType, String filter) {
         List<Song> songs = null;
         try (Connection conn = sql2o.open()) {
-             songs =
-                conn.createQuery("" +
-                        "SELECT id, title, artist, album, url, src, upvotes, downvotes, plays " +
-                        "FROM songs " +
-                        "WHERE :title = title OR :artist = artist OR :album = album")
-                        .addParameter("title", title)
-                        .addParameter("artist", artist)
-                        .addParameter("album", album)
-                        .executeAndFetch(Song.class);
-            return songs;
+            switch(filterType) {
+                case "title": // filter by title
+                    songs =
+                            conn.createQuery("" +
+                                    "SELECT id, title, artist, album, url, src, upvotes, downvotes, plays " +
+                                    "FROM songs WHERE title = :filter")
+                                    .addParameter("filter", filter)
+                                    .executeAndFetch(Song.class);
+                    return songs;
+                case "artist": // filter by artist
+                    songs =
+                            conn.createQuery("" +
+                                    "SELECT id, title, artist, album, url, src, upvotes, downvotes, plays " +
+                                    "FROM songs WHERE artist = :filter")
+                                    .addParameter("filter", filter)
+                                    .executeAndFetch(Song.class);
+                    return songs;
+                case "album": // filter by album
+                    songs =
+                            conn.createQuery("" +
+                                    "SELECT id, title, artist, album, url, src, upvotes, downvotes, plays " +
+                                    "FROM songs WHERE album = :filter")
+                                    .addParameter("filter", filter)
+                                    .executeAndFetch(Song.class);
+                    return songs;
+            }
         }
         catch (Exception e) {
             logger.error(e.getMessage());
         }
-
         return songs;
     }
 

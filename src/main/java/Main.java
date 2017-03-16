@@ -28,18 +28,15 @@ public class Main {
         });
 
         //TODO: check to make sure this endpoint works
-        get("/songs/:title/:artist/:album", (req, res) -> {
+        get("/songs/:filterType/:filter", (req, res) -> {
 
-            String title = req.params("title");
-            String artist = req.params("artist");
-            String album = req.params("album");
-
+            String filterType = req.params("filterType"); // 0 for title, 1 for artist, 2 for album
+            String filter = req.params("filter");
             logger.info("Get request: /songs"
-                + " for title " + title
-                + " and for artist " + artist
-                + " and for album " + album);
+                + " whose " + filterType
+                + " matches \"" + filter + "\"");
             Api myapi = Api.getApi();
-            List<Song> songs = myapi.getSongs(title, artist, album);
+            List<Song> songs = myapi.getSongs(filterType, filter);
 
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             return gson.toJson(songs);
