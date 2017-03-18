@@ -33,7 +33,7 @@ public class ApiImplementation extends Api {
         List<Song> songs = null;
         try (Connection conn = sql2o.open()) {
             switch(filterType) {
-                case "title": // filter by title
+                case "title": // filter by title only
                     songs =
                             conn.createQuery("" +
                                     "SELECT id, title, artist, album, url, src, upvotes, downvotes, plays " +
@@ -41,7 +41,7 @@ public class ApiImplementation extends Api {
                                     .addParameter("filter", filter)
                                     .executeAndFetch(Song.class);
                     return songs;
-                case "artist": // filter by artist
+                case "artist": // filter by artist only
                     songs =
                             conn.createQuery("" +
                                     "SELECT id, title, artist, album, url, src, upvotes, downvotes, plays " +
@@ -49,7 +49,7 @@ public class ApiImplementation extends Api {
                                     .addParameter("filter", filter)
                                     .executeAndFetch(Song.class);
                     return songs;
-                case "album": // filter by album
+                case "album": // filter by album only
                     songs =
                             conn.createQuery("" +
                                     "SELECT id, title, artist, album, url, src, upvotes, downvotes, plays " +
@@ -57,7 +57,7 @@ public class ApiImplementation extends Api {
                                     .addParameter("filter", filter)
                                     .executeAndFetch(Song.class);
                     return songs;
-                case "all": // search all columns
+                case "search": // search all columns with a single term
                     songs =
                             conn.createQuery("" +
                                     "SELECT id, title, artist, album, url, src, upvotes, downvotes, plays " +
