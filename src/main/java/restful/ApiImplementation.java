@@ -33,6 +33,13 @@ public class ApiImplementation extends Api {
         List<Song> songs = null;
         try (Connection conn = sql2o.open()) {
             switch(filterType) {
+                case "id": // grab song by id
+                    songs =
+                            conn.createQuery("" +
+                                    "SELECT id, title, artist, album, url, src, upvotes, downvotes, plays " +
+                                    "FROM songs WHERE id = :filter")
+                                    .addParameter("filter", filter)
+                                    .executeAndFetch(Song.class);
                 case "title": // filter by title only
                     songs =
                             conn.createQuery("" +
