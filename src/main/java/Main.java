@@ -16,11 +16,14 @@ import restful.Song;
 import java.util.List;
 
 import static spark.Spark.get;
+import static spark.Spark.port;
 import static spark.Spark.post;
 
 public class Main {
     static Logger logger = LoggerFactory.getLogger(Main.class);
     public static void main(String[] args) {
+
+        port(8080);
 
         get("/hello", (req, res) -> {
                 logger.debug("Get request: /hello");
