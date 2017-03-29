@@ -105,5 +105,32 @@ public class ApiImplementation extends Api {
         }
     }
 
+    @Override
+    public boolean updateSong (
+            int id,
+            String title,
+            String artist,
+            String album,
+            String url,
+            String src
+    ) {
+        try (Connection conn = sql2o.open()) {
+            conn.createQuery("insert into songs (id, title, artist, album, url, src) "
+                    + "values (:id, :title, :artist, :album, :url, :src);")
+                    .addParameter("id", id)
+                    .addParameter("title", title)
+                    .addParameter("artist", artist)
+                    .addParameter("album", album)
+                    .addParameter("url", url)
+                    .addParameter("src", src)
+                    .executeUpdate();
+            return true;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
 }

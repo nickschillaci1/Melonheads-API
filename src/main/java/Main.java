@@ -18,6 +18,7 @@ import java.util.List;
 import static spark.Spark.get;
 import static spark.Spark.port;
 import static spark.Spark.post;
+import static spark.Spark.put;
 
 public class Main {
     static Logger logger = LoggerFactory.getLogger(Main.class);
@@ -78,6 +79,37 @@ public class Main {
             }
 
         });
-        
+
+        put("songs/update", (request, response)-> {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            try {
+                JsonObject obj = new JsonParser().parse(request.body()).getAsJsonObject();
+
+                int id = obj.get("id").getAsInt();
+                String title = obj.get("title").getAsString();
+                String artist = obj.get("artist").getAsString();
+                String album = obj.get("album").getAsString();
+                String url = obj.get("url").getAsString();
+                String src = obj.get("src").getAsString();
+                logger.info("Put request updating song object with id: " + id); //
+
+                Api myapi = Api.getApi();
+
+
+                if (myapi.updateSong(id, title, artist, album, url, src)) {
+                    response.status(200);
+                    return gson.toJson(obj);
+                }
+                else {
+                    response.status(400);
+                    return(null);
+                }
+
+            } catch (Exception e) {
+                response.status(404);
+                return (gson.toJson(e));
+            }
+
+            });
     }
 }

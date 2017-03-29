@@ -46,5 +46,14 @@ public abstract class Api {
         String src
     );
 
+    public abstract boolean updateSong (
+            int id,
+            String title,
+            String artist,
+            String album,
+            String url,
+            String src
+    );
+
 
 }
