@@ -89,7 +89,7 @@ public class ApiImplementation extends Api {
             String src
     ) {
         try (Connection conn = sql2o.open()) {
-                conn.createQuery("insert into songs (title, artist, album, url, src) "
+                conn.createQuery("INSERT INTO songs (title, artist, album, url, src) "
                     + "values (:title, :artist, :album, :url, :src);")
                     .addParameter("title", title)
                     .addParameter("artist", artist)
@@ -115,16 +115,23 @@ public class ApiImplementation extends Api {
             String src
     ) {
         try (Connection conn = sql2o.open()) {
-            conn.createQuery("insert into songs (id, title, artist, album, url, src) "
-                    + "values (:id, :title, :artist, :album, :url, :src);")
-                    .addParameter("id", id)
-                    .addParameter("title", title)
-                    .addParameter("artist", artist)
-                    .addParameter("album", album)
-                    .addParameter("url", url)
-                    .addParameter("src", src)
-                    .executeUpdate();
-            return true;
+
+            if( id > 0){
+                conn.createQuery("INSERT INTO songs (id, title, artist, album, url, src) "
+                        + "values (:id, :title, :artist, :album, :url, :src) WHERE id = :id;")
+                        .addParameter("id", id)
+                        .addParameter("title", title)
+                        .addParameter("artist", artist)
+                        .addParameter("album", album)
+                        .addParameter("url", url)
+                        .addParameter("src", src)
+                        .executeUpdate();
+                return true;
+            }
+            else {
+                createSong(title, artist, album, url, src);
+            }
+
         }
         catch (Exception e) {
             e.printStackTrace();
