@@ -116,21 +116,16 @@ public class ApiImplementation extends Api {
     ) {
         try (Connection conn = sql2o.open()) {
 
-            if( id > 0){
-                conn.createQuery("INSERT INTO songs (id, title, artist, album, url, src) "
-                        + "values (:id, :title, :artist, :album, :url, :src) WHERE id = :id;")
-                        .addParameter("id", id)
-                        .addParameter("title", title)
-                        .addParameter("artist", artist)
-                        .addParameter("album", album)
-                        .addParameter("url", url)
-                        .addParameter("src", src)
-                        .executeUpdate();
-                return true;
-            }
-            else {
-                createSong(title, artist, album, url, src);
-            }
+            conn.createQuery("UPDATE songs (id, title, artist, album, url, src) "
+                    + "values (:id, :title, :artist, :album, :url, :src) WHERE id = :id;")
+                    .addParameter("id", id)
+                    .addParameter("title", title)
+                    .addParameter("artist", artist)
+                    .addParameter("album", album)
+                    .addParameter("url", url)
+                    .addParameter("src", src)
+                    .executeUpdate();
+            return true;
 
         }
         catch (Exception e) {
