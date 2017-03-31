@@ -116,8 +116,8 @@ public class ApiImplementation extends Api {
     ) {
         try (Connection conn = sql2o.open()) {
 
-            conn.createQuery("UPDATE songs (id, title, artist, album, url, src) "
-                    + "values (:id, :title, :artist, :album, :url, :src) WHERE id = :id;")
+            conn.createQuery("UPDATE songs SET title=  :title, artist = :artist,"
+                    + " album = :album, url = :url, src = :src WHERE id = :id;")
                     .addParameter("id", id)
                     .addParameter("title", title)
                     .addParameter("artist", artist)
@@ -134,5 +134,22 @@ public class ApiImplementation extends Api {
         }
     }
 
+    @Override
+    public boolean deleteSong (
+            int id
+    ) {
+        try (Connection conn = sql2o.open()) {
+
+            conn.createQuery("DELETE FROM songs WHERE id = :id;")
+                    .addParameter("id", id)
+                    .executeUpdate();
+            return true;
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }

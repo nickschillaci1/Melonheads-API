@@ -55,5 +55,9 @@ public abstract class Api {
             String src
     );
 
+    public abstract boolean deleteSong (
+            int id
+    );
+
 
 }
