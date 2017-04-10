@@ -155,6 +155,35 @@ public class Main {
 
         });
 
+        post("/playlists", (request, response) -> {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            response.type("application/json");
+
+            try {
+                JsonObject obj = new JsonParser().parse(request.body()).getAsJsonObject();
+
+                String title = obj.get("title").getAsString();
+                String songidlist = obj.get("songidlist").getAsString();
+                logger.info("Post request: /playlists"); //TODO: expand on the info written by the logger
+
+                Api myapi = Api.getApi();
+
+                if (myapi.createPlaylist(title, songidlist)) {
+                    response.status(200);
+                    return gson.toJson(obj);
+                }
+                else {
+                    response.status(400);
+                    return(null);
+                }
+
+            } catch (Exception e) {
+                response.status(404);
+                return (gson.toJson(e));
+            }
+
+        });
+
     }
 
 }

@@ -174,4 +174,22 @@ public class ApiImplementation extends Api {
         return playlist;
     }
 
+    @Override
+    public boolean createPlaylist (
+            String title,
+            String songidlist
+    ) {
+        try (Connection conn = sql2o.open()) {
+            conn.createQuery("INSERT INTO songs (title, songidlist) "
+                    + "values (:title, :songidlist);")
+                    .addParameter("title", title)
+                    .addParameter("songidlist", songidlist)
+                    .executeUpdate();
+            return true;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

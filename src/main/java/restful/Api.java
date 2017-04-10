@@ -72,4 +72,9 @@ public abstract class Api {
      * @return true if the playlist was added, false otherwise
      */
 
+    public abstract boolean createPlaylist (
+            String title,
+            String songidlist
+    );
+
 }
