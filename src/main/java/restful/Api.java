@@ -27,7 +27,6 @@ public abstract class Api {
      */
     public abstract List<Song> getSongs(String filterType, String filter);
 
-
     /**
      * Add a song to the database
      * @param title title of song
@@ -39,11 +38,11 @@ public abstract class Api {
      */
 
     public abstract boolean createSong (
-        String title,
-        String artist,
-        String album,
-        String url,
-        String src
+            String title,
+            String artist,
+            String album,
+            String url,
+            String src
     );
 
     public abstract boolean updateSong (
@@ -59,5 +58,18 @@ public abstract class Api {
             int id
     );
 
+    /**
+     * Return a single playist based on an id
+     * @param id unique number to identify a playlist
+     * @return a playlist of songs
+     */
+    public abstract Playlist getPlaylist(int id);
+
+    /**
+     * Add a playlist to the database
+     * @param title title of the playlist
+     * @param songidlist list of all song ids in a playlist  in CSV format
+     * @return true if the playlist was added, false otherwise
+     */
 
 }

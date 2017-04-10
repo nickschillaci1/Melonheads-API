@@ -11,6 +11,7 @@ import com.google.gson.JsonParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import restful.Api;
+import restful.Playlist;
 import restful.Song;
 
 import java.util.List;
@@ -27,13 +28,16 @@ public class Main {
 
         port(80);
 
+        /**
+         * Song Endpoints
+         */
         get("/songs/:filterType/:filter", (req, res) -> {
 
             String filterType = req.params("filterType"); // 0 for title, 1 for artist, 2 for album
             String filter = req.params("filter");
             logger.info("Get request: /songs"
-                + " whose " + filterType
-                + " matches \"" + filter + "\"");
+                    + " whose " + filterType
+                    + " matches \"" + filter + "\"");
             Api myapi = Api.getApi();
             List<Song> songs = myapi.getSongs(filterType, filter);
 
@@ -128,6 +132,22 @@ public class Main {
                 return (gson.toJson(e));
             }
         });
+
+        /**
+         * Playlist Endpoints
+         */
+        get("/playlists/:pid", (request, response) -> {
+
+            String pid = request.params("pid");
+            logger.info("Get request: /playlists whose id is: " + pid);
+            Api myapi = Api.getApi();
+            int id = Integer.parseInt("pid");
+            Playlist playlist = myapi.getPlaylist(id);
+
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            return gson.toJson(playlist);
+        });
+
     }
 
 }

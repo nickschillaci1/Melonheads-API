@@ -27,7 +27,9 @@ public class ApiImplementation extends Api {
         sql2o = new Sql2o(DB_URL, DB_NAME, DB_PASSWORD);
     }
 
-
+    /**
+     * Song Endpoints
+     */
     @Override
     public List<Song> getSongs(String filterType, String filter) {
         List<Song> songs = null;
@@ -89,15 +91,15 @@ public class ApiImplementation extends Api {
             String src
     ) {
         try (Connection conn = sql2o.open()) {
-                conn.createQuery("INSERT INTO songs (title, artist, album, url, src) "
+            conn.createQuery("INSERT INTO songs (title, artist, album, url, src) "
                     + "values (:title, :artist, :album, :url, :src);")
                     .addParameter("title", title)
                     .addParameter("artist", artist)
                     .addParameter("album", album)
                     .addParameter("url", url)
-                        .addParameter("src", src)
+                    .addParameter("src", src)
                     .executeUpdate();
-                return true;
+            return true;
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -150,6 +152,26 @@ public class ApiImplementation extends Api {
             e.printStackTrace();
             return false;
         }
+    }
+
+    /**
+     * Playlist Endpoints
+     */
+    @Override
+    public Playlist getPlaylist(int id) {
+        Playlist playlist = new Playlist();
+
+        try (Connection conn = sql2o.open()) {
+
+            conn.createQuery("SELECT id, title, songidlist FROM playlists WHERE id = :id")
+                    .addParameter("id", id)
+                    .executeAndFetch(Playlist.class);
+            return playlist;
+
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return playlist;
     }
 
 }
