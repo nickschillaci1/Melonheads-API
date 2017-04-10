@@ -163,7 +163,7 @@ public class ApiImplementation extends Api {
 
         try (Connection conn = sql2o.open()) {
 
-            conn.createQuery("SELECT id, title, songidlist FROM playlists WHERE id = :id")
+            conn.createQuery("SELECT id, title, songidlist FROM playlists WHERE id = :id;")
                     .addParameter("id", id)
                     .executeAndFetch(Playlist.class);
             return playlist;

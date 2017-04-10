@@ -136,16 +136,23 @@ public class Main {
         /**
          * Playlist Endpoints
          */
-        get("/playlists/:pid", (request, response) -> {
-
-            String pid = request.params("pid");
-            logger.info("Get request: /playlists whose id is: " + pid);
-            Api myapi = Api.getApi();
-            int id = Integer.parseInt("pid");
-            Playlist playlist = myapi.getPlaylist(id);
-
+        get("/playlists/:id", (request, response) -> {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            return gson.toJson(playlist);
+
+            try {
+                String id = request.params("id");
+                logger.info("Get request: /playlists whose id is: " + id);
+                Api myapi = Api.getApi();
+
+                int p_id = Integer.parseInt(id.trim());
+                Playlist playlist = myapi.getPlaylist(p_id);
+
+                return gson.toJson(playlist);
+            } catch (Exception e) {
+                response.status(404);
+                return (gson.toJson(e));
+            }
+
         });
 
     }
