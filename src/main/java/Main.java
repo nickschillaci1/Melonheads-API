@@ -141,13 +141,20 @@ public class Main {
 
             try {
                 String id = request.params("id");
-                logger.info("Get request: /playlists whose id is: " + id);
                 Api myapi = Api.getApi();
+                List<Playlist> playlists;
 
-                int p_id = Integer.parseInt(id.trim());
-                Playlist playlist = myapi.getPlaylist(p_id);
+                if (id.equals("all")){
+                    logger.info("Get request: /playlists/all");
+                    playlists = myapi.getPlaylists(-1, id);
+                }
+                else {
+                    logger.info("Get request: /playlists whose id is: " + id);
+                    int p_id = Integer.parseInt(id.trim());
+                    playlists = myapi.getPlaylists(p_id, null);
+                }
 
-                return gson.toJson(playlist);
+                return gson.toJson(playlists);
             } catch (Exception e) {
                 response.status(404);
                 return (gson.toJson(e));

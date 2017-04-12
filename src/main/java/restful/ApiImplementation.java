@@ -158,20 +158,27 @@ public class ApiImplementation extends Api {
      * Playlist Endpoints
      */
     @Override
-    public Playlist getPlaylist(int id) {
-        Playlist playlist = new Playlist();
+    public List<Playlist> getPlaylists(int id, String str) {
+        List<Playlist> playlists = null;
 
         try (Connection conn = sql2o.open()) {
 
-            conn.createQuery("SELECT id, title, songidlist FROM playlists WHERE id = :id;")
-                    .addParameter("id", id)
-                    .executeAndFetch(Playlist.class);
-            return playlist;
+            if (id == -1){
+                playlists = conn.createQuery("SELECT id, title, songidlist FROM playlists;")
+                        .executeAndFetch(Playlist.class);
+                return playlists;
+            }
+            else {
+                playlists = conn.createQuery("SELECT id, title, songidlist FROM playlists WHERE id = :id;")
+                        .addParameter("id", id)
+                        .executeAndFetch(Playlist.class);
+                return playlists;
+            }
 
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
-        return playlist;
+        return playlists;
     }
 
     @Override

@@ -63,7 +63,7 @@ public abstract class Api {
      * @param id unique number to identify a playlist
      * @return a playlist of songs
      */
-    public abstract Playlist getPlaylist(int id);
+    public abstract List<Playlist> getPlaylists(int id, String str);
 
     /**
      * Add a playlist to the database
