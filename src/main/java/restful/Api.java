@@ -77,4 +77,14 @@ public abstract class Api {
             String songidlist
     );
 
+    public abstract boolean updatePlaylist (
+            int id,
+            String title,
+            String songidlist
+    );
+
+    public abstract boolean deletePlaylist (
+            int id
+    );
+
 }

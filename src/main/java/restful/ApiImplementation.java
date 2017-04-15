@@ -199,4 +199,45 @@ public class ApiImplementation extends Api {
             return false;
         }
     }
+
+    @Override
+    public boolean updatePlaylist (
+            int id,
+            String title,
+            String songidlist
+    ) {
+        try (Connection conn = sql2o.open()) {
+
+            conn.createQuery("UPDATE playlists SET title =  :title, songidlist = :songidlist,"
+                    + "WHERE id = :id;")
+                    .addParameter("id", id)
+                    .addParameter("title", title)
+                    .addParameter("songidlist", songidlist)
+                    .executeUpdate();
+            return true;
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deletePlaylist (
+            int id
+    ) {
+        try (Connection conn = sql2o.open()) {
+
+            conn.createQuery("DELETE FROM playlists WHERE id = :id;")
+                    .addParameter("id", id)
+                    .executeUpdate();
+            return true;
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

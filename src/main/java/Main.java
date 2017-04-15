@@ -77,7 +77,7 @@ public class Main {
 
         });
 
-        put("songs/update", (request, response)-> {
+        put("/songs/update", (request, response)-> {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             try {
                 JsonObject obj = new JsonParser().parse(request.body()).getAsJsonObject();
@@ -108,7 +108,7 @@ public class Main {
 
         });
 
-        delete("songs/delete", (request, response) -> {
+        delete("/songs/delete", (request, response) -> {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             try {
                 JsonObject obj = new JsonParser().parse(request.body()).getAsJsonObject();
@@ -189,6 +189,59 @@ public class Main {
                 return (gson.toJson(e));
             }
 
+        });
+
+        put("/playlists/update", (request, response)-> {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            try {
+                JsonObject obj = new JsonParser().parse(request.body()).getAsJsonObject();
+
+                int id = obj.get("id").getAsInt();
+                String title = obj.get("title").getAsString();
+                String songidlist = obj.get("songidlist").getAsString();
+                logger.info("Put request updating playlist object with id: " + id);
+
+                Api myapi = Api.getApi();
+
+                if (myapi.updatePlaylist(id, title, songidlist)) {
+                    response.status(200);
+                    return gson.toJson(obj);
+                }
+                else {
+                    response.status(400);
+                    return(null);
+                }
+
+            } catch (Exception e) {
+                response.status(404);
+                return (gson.toJson(e));
+            }
+
+        });
+
+        delete("/playlists/delete", (request, response) -> {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            try {
+                JsonObject obj = new JsonParser().parse(request.body()).getAsJsonObject();
+
+                int id = obj.get("id").getAsInt();
+                logger.info("Delete request deleting playlist object with id: " + id);
+
+                Api myapi = Api.getApi();
+
+                if (myapi.deletePlaylist(id)) {
+                    response.status(200);
+                    return gson.toJson(obj);
+                }
+                else {
+                    response.status(400);
+                    return(null);
+                }
+
+            } catch (Exception e) {
+                response.status(404);
+                return (gson.toJson(e));
+            }
         });
 
     }
