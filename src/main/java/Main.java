@@ -77,7 +77,7 @@ public class Main {
 
         });
 
-        put("songs/update", (request, response)-> {
+        put("/songs/update", (request, response)-> {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             try {
                 JsonObject obj = new JsonParser().parse(request.body()).getAsJsonObject();
@@ -108,7 +108,7 @@ public class Main {
 
         });
 
-        delete("songs/delete", (request, response) -> {
+        delete("/songs/delete", (request, response) -> {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             try {
                 JsonObject obj = new JsonParser().parse(request.body()).getAsJsonObject();
