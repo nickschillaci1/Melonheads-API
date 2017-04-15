@@ -187,7 +187,7 @@ public class ApiImplementation extends Api {
             String songidlist
     ) {
         try (Connection conn = sql2o.open()) {
-            conn.createQuery("INSERT INTO songs (title, songidlist) "
+            conn.createQuery("INSERT INTO playlists (title, songidlist) "
                     + "values (:title, :songidlist);")
                     .addParameter("title", title)
                     .addParameter("songidlist", songidlist)
