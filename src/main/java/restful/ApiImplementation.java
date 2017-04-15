@@ -208,7 +208,7 @@ public class ApiImplementation extends Api {
     ) {
         try (Connection conn = sql2o.open()) {
 
-            conn.createQuery("UPDATE playlists SET title =  :title, songidlist = :songidlist,"
+            conn.createQuery("UPDATE playlists SET title=  :title, songidlist= :songidlist"
                     + "WHERE id = :id;")
                     .addParameter("id", id)
                     .addParameter("title", title)
