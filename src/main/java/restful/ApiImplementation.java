@@ -42,6 +42,7 @@ public class ApiImplementation extends Api {
                                     "FROM songs WHERE id = :filter")
                                     .addParameter("filter", filter)
                                     .executeAndFetch(Song.class);
+                    return songs;
                 case "title": // filter by title only
                     songs =
                             conn.createQuery("" +
