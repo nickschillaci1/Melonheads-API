@@ -119,8 +119,7 @@ public class ApiImplementation extends Api {
     ) {
         try (Connection conn = sql2o.open()) {
 
-            conn.createQuery("UPDATE songs SET title=  :title, artist = :artist,"
-                    + " album = :album, url = :url, src = :src WHERE id = :id;")
+            conn.createQuery("UPDATE songs SET title=  :title, artist = :artist, album = :album, url = :url, src = :src WHERE id = :id;")
                     .addParameter("id", id)
                     .addParameter("title", title)
                     .addParameter("artist", artist)
@@ -188,7 +187,7 @@ public class ApiImplementation extends Api {
             String songidlist
     ) {
         try (Connection conn = sql2o.open()) {
-            conn.createQuery("INSERT INTO songs (title, songidlist) "
+            conn.createQuery("INSERT INTO playlists (title, songidlist) "
                     + "values (:title, :songidlist);")
                     .addParameter("title", title)
                     .addParameter("songidlist", songidlist)
@@ -209,8 +208,7 @@ public class ApiImplementation extends Api {
     ) {
         try (Connection conn = sql2o.open()) {
 
-            conn.createQuery("UPDATE playlists SET title =  :title, songidlist = :songidlist,"
-                    + "WHERE id = :id;")
+            conn.createQuery("UPDATE playlists SET title = :title, songidlist = :songidlist WHERE id = :id;")
                     .addParameter("id", id)
                     .addParameter("title", title)
                     .addParameter("songidlist", songidlist)
