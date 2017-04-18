@@ -58,6 +58,11 @@ public abstract class Api {
             int id
     );
 
+    public abstract boolean onSongPlayed (
+            int id,
+            int newValue
+    );
+
     /**
      * Return a single playist based on an id
      * @param id unique number to identify a playlist

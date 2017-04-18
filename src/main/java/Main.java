@@ -133,6 +133,33 @@ public class Main {
             }
         });
 
+        put("/songs/play", (request, response)-> {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            try {
+                JsonObject obj = new JsonParser().parse(request.body()).getAsJsonObject();
+
+                int id = obj.get("id").getAsInt();
+                int newValue = obj.get("newValue").getAsInt();
+                logger.info("Put request updating playcount of song with id: " + id);
+
+                Api myapi = Api.getApi();
+
+                if (myapi.onSongPlayed(id, newValue)) {
+                    response.status(200);
+                    return gson.toJson(obj);
+                }
+                else {
+                    response.status(400);
+                    return(null);
+                }
+
+            } catch (Exception e) {
+                response.status(404);
+                return (gson.toJson(e));
+            }
+
+        });
+
         /**
          * Playlist Endpoints
          */
