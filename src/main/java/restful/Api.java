@@ -59,13 +59,11 @@ public abstract class Api {
     );
 
     public abstract boolean onSongPlayed (
-            int id,
-            int newValue
+            int id
     );
 
     public abstract boolean onSongVoted (
             int id,
-            int newValue,
             int voteType
     );
 

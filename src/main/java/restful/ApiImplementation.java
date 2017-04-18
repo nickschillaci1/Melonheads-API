@@ -158,13 +158,11 @@ public class ApiImplementation extends Api {
 
     @Override
     public boolean onSongPlayed (
-        int id,
-        int newValue
+        int id
     ) {
         try (Connection conn = sql2o.open()) {
-            conn.createQuery("UPDATE songs SET plays = :newValue WHERE id = :id;")
+            conn.createQuery("UPDATE songs SET plays = plays + 1 WHERE id = :id;")
                     .addParameter("id", id)
-                    .addParameter("newValue", newValue)
                     .executeUpdate();
             return true;
         }
@@ -177,20 +175,17 @@ public class ApiImplementation extends Api {
     @Override
     public boolean onSongVoted (
             int id,
-            int newValue,
             int voteType
     ) {
         try (Connection conn = sql2o.open()) {
             if(voteType == VOTE_UP) {
-                conn.createQuery("UPDATE songs SET upvotes = :newValue WHERE id = :id;")
+                conn.createQuery("UPDATE songs SET upvotes = upvotes + 1 WHERE id = :id;")
                         .addParameter("id", id)
-                        .addParameter("newValue", newValue)
                         .executeUpdate();
             }
             else if(voteType == VOTE_DOWN) {
-                conn.createQuery("UPDATE songs SET downvotes = :newValue WHERE id = :id;")
+                conn.createQuery("UPDATE songs SET downvotes = downvotes + 1 WHERE id = :id;")
                         .addParameter("id", id)
-                        .addParameter("newValue", newValue)
                         .executeUpdate();
             }
             return true;

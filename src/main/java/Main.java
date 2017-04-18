@@ -139,12 +139,11 @@ public class Main {
                 JsonObject obj = new JsonParser().parse(request.body()).getAsJsonObject();
 
                 int id = obj.get("id").getAsInt();
-                int newValue = obj.get("newValue").getAsInt();
                 logger.info("Put request updating playcount of song with id: " + id);
 
                 Api myapi = Api.getApi();
 
-                if (myapi.onSongPlayed(id, newValue)) {
+                if (myapi.onSongPlayed(id)) {
                     response.status(200);
                     return gson.toJson(obj);
                 }
@@ -166,13 +165,12 @@ public class Main {
                 JsonObject obj = new JsonParser().parse(request.body()).getAsJsonObject();
 
                 int id = obj.get("id").getAsInt();
-                int newValue = obj.get("newValue").getAsInt();
                 int voteType = obj.get("voteType").getAsInt();
                 logger.info("Put request updating up/downvotes of song with id: " + id);
 
                 Api myapi = Api.getApi();
 
-                if (myapi.onSongVoted(id, newValue, voteType)) {
+                if (myapi.onSongVoted(id, voteType)) {
                     response.status(200);
                     return gson.toJson(obj);
                 }
