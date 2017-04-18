@@ -23,7 +23,7 @@ public class ApiImplementation extends Api {
     static final String DB_NAME = auth.get(1);
     static final String DB_PASSWORD = auth.get(2);
 
-    static final int ACTION_PLAY = 0, ACTION_UPVOTE = 1, ACTION_DOWNVOTE = 2;
+    static final int VOTE_UP = 0, VOTE_DOWN = 1;
 
     public ApiImplementation() {
         sql2o = new Sql2o(DB_URL, DB_NAME, DB_PASSWORD);
@@ -166,6 +166,33 @@ public class ApiImplementation extends Api {
                     .addParameter("id", id)
                     .addParameter("newValue", newValue)
                     .executeUpdate();
+            return true;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean onSongVoted (
+            int id,
+            int newValue,
+            int voteType
+    ) {
+        try (Connection conn = sql2o.open()) {
+            if(voteType == VOTE_UP) {
+                conn.createQuery("UPDATE songs SET upvotes = :newValue WHERE id = :id;")
+                        .addParameter("id", id)
+                        .addParameter("newValue", newValue)
+                        .executeUpdate();
+            }
+            else if(voteType == VOTE_DOWN) {
+                conn.createQuery("UPDATE songs SET downvotes = :newValue WHERE id = :id;")
+                        .addParameter("id", id)
+                        .addParameter("newValue", newValue)
+                        .executeUpdate();
+            }
             return true;
         }
         catch (Exception e) {

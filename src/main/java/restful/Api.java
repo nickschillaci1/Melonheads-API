@@ -63,6 +63,12 @@ public abstract class Api {
             int newValue
     );
 
+    public abstract boolean onSongVoted (
+            int id,
+            int newValue,
+            int voteType
+    );
+
     /**
      * Return a single playist based on an id
      * @param id unique number to identify a playlist

@@ -160,6 +160,34 @@ public class Main {
 
         });
 
+        put("/songs/vote", (request, response)-> {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            try {
+                JsonObject obj = new JsonParser().parse(request.body()).getAsJsonObject();
+
+                int id = obj.get("id").getAsInt();
+                int newValue = obj.get("newValue").getAsInt();
+                int voteType = obj.get("voteType").getAsInt();
+                logger.info("Put request updating up/downvotes of song with id: " + id);
+
+                Api myapi = Api.getApi();
+
+                if (myapi.onSongVoted(id, newValue, voteType)) {
+                    response.status(200);
+                    return gson.toJson(obj);
+                }
+                else {
+                    response.status(400);
+                    return(null);
+                }
+
+            } catch (Exception e) {
+                response.status(404);
+                return (gson.toJson(e));
+            }
+
+        });
+
         /**
          * Playlist Endpoints
          */
