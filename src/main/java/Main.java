@@ -28,7 +28,7 @@ public class Main {
     static Logger logger = LoggerFactory.getLogger(Main.class);
     public static void main(String[] args) {
 
-        port(8080);
+        port(80);
 
         RecentAdditions.createRecentAdditionLists();
 
