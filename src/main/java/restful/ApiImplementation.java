@@ -243,7 +243,7 @@ public class ApiImplementation extends Api {
             return true;
         }
         catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return false;
         }
     }
@@ -265,7 +265,7 @@ public class ApiImplementation extends Api {
 
         }
         catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return false;
         }
     }
@@ -283,7 +283,7 @@ public class ApiImplementation extends Api {
 
         }
         catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return false;
         }
     }
