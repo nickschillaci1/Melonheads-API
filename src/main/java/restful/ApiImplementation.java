@@ -102,6 +102,9 @@ public class ApiImplementation extends Api {
                     .addParameter("url", url)
                     .addParameter("src", src)
                     .executeUpdate();
+            // grab the auto-generated ID of the song we just added and add it to recent additions.
+            int id = conn.createQuery("SELECT id FROM songs WHERE id = LAST_INSERT_ID();").executeScalar(int.class);
+            RecentAdditions.onSongAdded(id);
             return true;
         }
         catch (Exception e) {
@@ -234,6 +237,9 @@ public class ApiImplementation extends Api {
                     .addParameter("title", title)
                     .addParameter("songidlist", songidlist)
                     .executeUpdate();
+            // grab the auto-generated ID of the playlist we just added and add it to recent additions.
+            int id = conn.createQuery("SELECT id FROM playlists WHERE id = LAST_INSERT_ID();").executeScalar(int.class);
+            RecentAdditions.onPlaylistAdded(id);
             return true;
         }
         catch (Exception e) {

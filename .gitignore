@@ -22,3 +22,6 @@ src/main/resources/META-INF/
 
 # sensitive database authentication information
 src/main/resources/dbi.cfg
+
+# installation-specific data folder
+data/

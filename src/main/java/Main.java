@@ -12,8 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import restful.Api;
 import restful.Playlist;
+import restful.RecentAdditions;
 import restful.Song;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static spark.Spark.get;
@@ -26,7 +28,9 @@ public class Main {
     static Logger logger = LoggerFactory.getLogger(Main.class);
     public static void main(String[] args) {
 
-        port(80);
+        port(8080);
+
+        RecentAdditions.createRecentAdditionLists();
 
         /**
          * Song Endpoints
@@ -186,6 +190,11 @@ public class Main {
 
         });
 
+        get("/songs/recent", (req, res) -> {
+            logger.info("Get request: /songs/recent");
+            return new GsonBuilder().setPrettyPrinting().create().toJson(RecentAdditions.getRecentSongIds());
+        });
+
         /**
          * Playlist Endpoints
          */
@@ -297,6 +306,13 @@ public class Main {
             }
         });
 
+        get("/playlists/recent", (req, res) -> {
+            logger.info("Get request: /playlists/recent");
+            return new GsonBuilder().setPrettyPrinting().create().toJson(RecentAdditions.getRecentPlaylistIds());
+        });
+
     }
+
+
 
 }
