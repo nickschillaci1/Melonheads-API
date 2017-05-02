@@ -118,6 +118,18 @@ public class RecentAdditions {
     }
 
     /**
+     * When a song is deleted via the API, we need to check if it was a recent song
+     * and remove it from the list if it was. This prevents null pointers on the client side.
+     */
+    public static boolean onSongDeleted(int songId) {
+        if(recentSongIds.containsKey(songId)) {
+            recentSongIds.remove(songId);
+            updateFile(RECENT_SONGS_FILE, recentSongIds);
+        }
+        return true;
+    }
+
+    /**
      * If there are 10 recent playlists, boot out the oldest playlist and
      * add the new one. If there are less than 10, just add the new one.
      */
@@ -138,6 +150,18 @@ public class RecentAdditions {
             recentPlaylistIds.put(playlistId, 0);
         }
         updateFile(RECENT_PLAYLISTS_FILE, recentPlaylistIds);
+        return true;
+    }
+
+    /**
+     * When a playlist is deleted via the API, we need to check if it was a recent playlist
+     * and remove it from the list if it was. This prevents null pointers on the client side.
+     */
+    public static boolean onPlaylistDeleted(int playlistId) {
+        if(recentSongIds.containsKey(playlistId)) {
+            recentSongIds.remove(playlistId);
+            updateFile(RECENT_PLAYLISTS_FILE, recentPlaylistIds);
+        }
         return true;
     }
 

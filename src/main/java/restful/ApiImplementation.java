@@ -150,6 +150,7 @@ public class ApiImplementation extends Api {
             conn.createQuery("DELETE FROM songs WHERE id = :id;")
                     .addParameter("id", id)
                     .executeUpdate();
+            RecentAdditions.onSongDeleted(id);
             return true;
 
         }
@@ -279,6 +280,7 @@ public class ApiImplementation extends Api {
             conn.createQuery("DELETE FROM playlists WHERE id = :id;")
                     .addParameter("id", id)
                     .executeUpdate();
+            RecentAdditions.onPlaylistDeleted(id);
             return true;
 
         }
